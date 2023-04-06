@@ -24,11 +24,14 @@ public class Movies {
     private JPanel Register;
     private JPanel About;
     private JPanel List;
-    private JButton editButton;
+    private JButton updateButton;
     private JButton deleteButton;
     private JButton listButton;
+    private JTextField txtId;
+    private JButton editButton;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         JFrame frame = new JFrame("Movies");
         frame.setContentPane(new Movies().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,16 +120,127 @@ public class Movies {
                 txtYear.setText("");
             }
         });
+
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                String id;
+
+                id = txtId.getText();
+
+                try {
+
+                    pst = connection.prepareStatement("delete from movies where id = ?::integer");
+                    pst.setString(1, id);
+                    pst.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null, "Movie deleted!");
+                    tableLoad();
+                    txtName.setText("");
+                    txtDirector.setText("");
+                    txtGender.setText("");
+                    txtYear.setText("");
+                    txtScore.setText("");
+                    txtName.requestFocus();
+
+                } catch (SQLException ex){
+
+                    ex.printStackTrace();
+
+                }
+
             }
         });
+
         listButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            tableLoad();
+
+                tableLoad();
+            }
+        });
+
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String id, name, director, gender, year, score;
+
+                id = txtId.getText();
+                name = txtName.getText();
+                director = txtDirector.getText();
+                gender = txtGender.getText();
+                year = txtYear.getText();
+                score = txtScore.getText();
+
+                try {
+                    pst = connection.prepareStatement("update movies set name = ?, director = ?, gender = ?, year = ?::integer, score = ?::integer where id = ?::integer");
+                    pst.setString(1, name);
+                    pst.setString(2, director);
+                    pst.setString(3, gender);
+                    pst.setString(4, year);
+                    pst.setString(5, score);
+                    pst.setString(6, id);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Register updated");
+                    tableLoad();
+                    txtName.setText("");
+                    txtDirector.setText("");
+                    txtGender.setText("");
+                    txtYear.setText("");
+                    txtScore.setText("");
+                    txtName.requestFocus();
+
+                } catch (SQLException ex){
+
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+
+                    String id = txtId.getText();
+
+                    pst = connection.prepareStatement("select name, director, gender, year, score from movies where id = ?::integer");
+                    pst.setString(1, id);
+                    ResultSet rs = pst.executeQuery();
+
+                    if (rs.next()==true){
+
+                        String name = rs.getString(1);
+                        String director = rs.getString(2);
+                        String gender = rs.getString(3);
+                        String year = rs.getString(4);
+                        String score = rs.getString(5);
+
+                        txtName.setText(name);
+                        txtDirector.setText(director);
+                        txtGender.setText(gender);
+                        txtYear.setText(year);
+                        txtScore.setText(score);
+
+                    } else {
+
+                        txtName.setText("");
+                        txtDirector.setText("");
+                        txtGender.setText("");
+                        txtYear.setText("");
+                        txtScore.setText("");
+                        JOptionPane.showMessageDialog(null, "Invalid register!");
+
+                    }
+
+                } catch (SQLException ex){
+
+                    ex.printStackTrace();
+                }
+
             }
         });
     }
