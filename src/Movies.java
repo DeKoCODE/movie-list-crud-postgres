@@ -1,8 +1,11 @@
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 
 public class Movies {
@@ -153,7 +156,7 @@ public class Movies {
 
             }
         });
-
+/* Removido botão list da interface*/
 //        listButton.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -244,5 +247,28 @@ public class Movies {
 
             }
         });
+
+        /* Tentativa de implementar ação de retornar registro selecionado diretamente na tabela */
+
+//        moviesTable.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//
+//                String df;
+//
+//                df = (DefaultTableModel)moviesTable.getModel();
+//                int selected = moviesTable.getSelectedRow();
+//
+//                int id = Integer.parseInt(df.getValueAt(selected,0).toString());
+//                txtName.setText(df.getValueAt(selected,1).toString());
+//                txtDirector.setText(df.getValueAt(selected,1).toString());
+//                txtGender.setText(df.getValueAt(selected,1).toString());
+//                txtYear.setText(df.getValueAt(selected,1).toString());
+//                txtScore.setText(df.getValueAt(selected,1).toString());
+//
+//            }
+//
+//        });
     }
 }
