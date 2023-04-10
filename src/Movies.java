@@ -23,12 +23,11 @@ public class Movies {
     private JLabel Score;
     private JPanel Register;
     private JPanel About;
-    private JPanel List;
     private JButton updateButton;
     private JButton deleteButton;
-    private JButton listButton;
     private JTextField txtId;
     private JButton editButton;
+    private JPanel Movie;
 
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -95,6 +94,7 @@ public class Movies {
                 txtGender.setText("");
                 txtScore.setText("");
                 txtYear.setText("");
+                tableLoad();
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -154,13 +154,13 @@ public class Movies {
             }
         });
 
-        listButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                tableLoad();
-            }
-        });
+//        listButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                tableLoad();
+//            }
+//        });
 
         updateButton.addActionListener(new ActionListener() {
             @Override
