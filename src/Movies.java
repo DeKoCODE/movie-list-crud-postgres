@@ -57,6 +57,7 @@ public class Movies {
             pst = connection.prepareStatement("select * from movies");
             ResultSet rs = pst.executeQuery();
             moviesTable.setModel(DbUtils.resultSetToTableModel(rs));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
