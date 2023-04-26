@@ -67,39 +67,40 @@ public class Movies {
         connect();
         tableLoad();
 
-    saveButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-            String name, director, genre, year, rating;
+                String name, director, genre, year, rating;
 
-            name = txtName.getText();
-            director = txtDirector.getText();
-            genre = txtGenre.getText();
-            year = txtYear.getText();
-            rating = txtRating.getText();
+                name = txtName.getText();
+                director = txtDirector.getText();
+                genre = txtGenre.getText();
+                year = txtYear.getText();
+                rating = txtRating.getText();
 
-            try {
-                pst = connection.prepareStatement("insert into movies(name, director, genre, year, rating)values(?,?,?,?::integer,?::numeric)");
-                pst.setString(1,name);
-                pst.setString(2,director);
-                pst.setString(3,genre);
-                pst.setString(4,year);
-                pst.setString(5,rating);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Success! Movie added to your DB!");
-                txtName.setText("");
-                txtDirector.setText("");
-                txtGenre.setText("");
-                txtRating.setText("");
-                txtYear.setText("");
-                tableLoad();
+                try {
+                    pst = connection.prepareStatement("insert into movies(name, director, genre, year, rating)values(?,?,?,?::integer,?::numeric)");
+                    pst.setString(1,name);
+                    pst.setString(2,director);
+                    pst.setString(3,genre);
+                    pst.setString(4,year);
+                    pst.setString(5,rating);
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Success! Movie added to your DB!");
+                    txtName.setText("");
+                    txtDirector.setText("");
+                    txtGenre.setText("");
+                    txtRating.setText("");
+                    txtYear.setText("");
+                    tableLoad();
 
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Register NOT added! Invalid data.");
+                }
             }
-        }
-    });
+        });
 
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -185,12 +186,13 @@ public class Movies {
                     txtName.requestFocus();
 
                 } catch (SQLException ex){
-
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Register NOT added! Invalid data.");
                 }
 
             }
         });
+
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -229,7 +231,6 @@ public class Movies {
                     }
 
                 } catch (SQLException ex){
-
                     ex.printStackTrace();
                 }
 
