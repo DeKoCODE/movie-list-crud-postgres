@@ -19,7 +19,7 @@
 
 ## 💻 Project
 
-The project is a software to store and record a list of movies with their respective genres and ratings. The application allows users to add new movies, view the complete list, search by id for each movie. The goal of the project is to provide an intuitive and efficient tool for movie enthusiasts to organize their favorite movie lists."
+The project is a software to store and record a list of movies with their respective genres and ratings. The application allows users to add new movies, view the complete list, search by id for each movie. The goal of the project is to provide an intuitive and efficient tool for movie enthusiasts to organize their favorite movie lists.
 
 ## 🔖 Layout
 
