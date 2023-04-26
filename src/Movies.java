@@ -1,29 +1,25 @@
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.*;
 
 public class Movies {
     private JPanel panel1;
     private JTextField txtName;
     private JTextField txtDirector;
-    private JTextField txtGender;
+    private JTextField txtGenre;
     private JTextField txtYear;
-    private JTextField txtScore;
+    private JTextField txtRating;
     private JTabbedPane Panel;
     private JButton saveButton;
     private JButton clearButton;
     private JTable moviesTable;
     private JLabel Name;
     private JLabel Director;
-    private JLabel Gender;
+    private JLabel Genre;
     private JLabel Year;
-    private JLabel Score;
+    private JLabel Rating;
     private JPanel Register;
     private JPanel About;
     private JButton updateButton;
@@ -75,27 +71,27 @@ public class Movies {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String name, director, gender, year, score;
+            String name, director, genre, year, rating;
 
             name = txtName.getText();
             director = txtDirector.getText();
-            gender = txtGender.getText();
+            genre = txtGenre.getText();
             year = txtYear.getText();
-            score = txtScore.getText();
+            rating = txtRating.getText();
 
             try {
-                pst = connection.prepareStatement("insert into movies(name, director, gender, year, score)values(?,?,?,?::integer,?::integer)");
+                pst = connection.prepareStatement("insert into movies(name, director, genre, year, rating)values(?,?,?,?::integer,?::numeric)");
                 pst.setString(1,name);
                 pst.setString(2,director);
-                pst.setString(3,gender);
+                pst.setString(3,genre);
                 pst.setString(4,year);
-                pst.setString(5,score);
+                pst.setString(5,rating);
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Success! Movie added to your DB!");
                 txtName.setText("");
                 txtDirector.setText("");
-                txtGender.setText("");
-                txtScore.setText("");
+                txtGenre.setText("");
+                txtRating.setText("");
                 txtYear.setText("");
                 tableLoad();
 
@@ -109,18 +105,18 @@ public class Movies {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String name, director, gender, year, score;
+                String name, director, genre, year, rating;
 
                 name = txtName.getText();
                 director = txtDirector.getText();
-                gender = txtGender.getText();
+                genre = txtGenre.getText();
                 year = txtYear.getText();
-                score = txtScore.getText();
+                rating = txtRating.getText();
 
                 txtName.setText("");
                 txtDirector.setText("");
-                txtGender.setText("");
-                txtScore.setText("");
+                txtGenre.setText("");
+                txtRating.setText("");
                 txtYear.setText("");
             }
         });
@@ -143,9 +139,9 @@ public class Movies {
                     tableLoad();
                     txtName.setText("");
                     txtDirector.setText("");
-                    txtGender.setText("");
+                    txtGenre.setText("");
                     txtYear.setText("");
-                    txtScore.setText("");
+                    txtRating.setText("");
                     txtName.requestFocus();
 
                 } catch (SQLException ex){
@@ -156,44 +152,36 @@ public class Movies {
 
             }
         });
-/* Removido botão list da interface*/
-//        listButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//                tableLoad();
-//            }
-//        });
 
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String id, name, director, gender, year, score;
+                String id, name, director, genre, year, rating;
 
                 id = txtId.getText();
                 name = txtName.getText();
                 director = txtDirector.getText();
-                gender = txtGender.getText();
+                genre = txtGenre.getText();
                 year = txtYear.getText();
-                score = txtScore.getText();
+                rating = txtRating.getText();
 
                 try {
-                    pst = connection.prepareStatement("update movies set name = ?, director = ?, gender = ?, year = ?::integer, score = ?::integer where id = ?::integer");
+                    pst = connection.prepareStatement("update movies set name = ?, director = ?, genre = ?, year = ?::integer, rating = ?::numeric where id = ?::integer");
                     pst.setString(1, name);
                     pst.setString(2, director);
-                    pst.setString(3, gender);
+                    pst.setString(3, genre);
                     pst.setString(4, year);
-                    pst.setString(5, score);
+                    pst.setString(5, rating);
                     pst.setString(6, id);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Register updated");
                     tableLoad();
                     txtName.setText("");
                     txtDirector.setText("");
-                    txtGender.setText("");
+                    txtGenre.setText("");
                     txtYear.setText("");
-                    txtScore.setText("");
+                    txtRating.setText("");
                     txtName.requestFocus();
 
                 } catch (SQLException ex){
@@ -211,7 +199,7 @@ public class Movies {
 
                     String id = txtId.getText();
 
-                    pst = connection.prepareStatement("select name, director, gender, year, score from movies where id = ?::integer");
+                    pst = connection.prepareStatement("select name, director, genre, year, rating from movies where id = ?::integer");
                     pst.setString(1, id);
                     ResultSet rs = pst.executeQuery();
 
@@ -219,23 +207,23 @@ public class Movies {
 
                         String name = rs.getString(1);
                         String director = rs.getString(2);
-                        String gender = rs.getString(3);
+                        String genre = rs.getString(3);
                         String year = rs.getString(4);
-                        String score = rs.getString(5);
+                        String rating = rs.getString(5);
 
                         txtName.setText(name);
                         txtDirector.setText(director);
-                        txtGender.setText(gender);
+                        txtGenre.setText(genre);
                         txtYear.setText(year);
-                        txtScore.setText(score);
+                        txtRating.setText(rating);
 
                     } else {
 
                         txtName.setText("");
                         txtDirector.setText("");
-                        txtGender.setText("");
+                        txtGenre.setText("");
                         txtYear.setText("");
-                        txtScore.setText("");
+                        txtRating.setText("");
                         JOptionPane.showMessageDialog(null, "Invalid register!");
 
                     }
@@ -247,28 +235,5 @@ public class Movies {
 
             }
         });
-
-        /* Tentativa de implementar ação de retornar registro selecionado diretamente na tabela */
-
-//        moviesTable.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//
-//                String df;
-//
-//                df = (DefaultTableModel)moviesTable.getModel();
-//                int selected = moviesTable.getSelectedRow();
-//
-//                int id = Integer.parseInt(df.getValueAt(selected,0).toString());
-//                txtName.setText(df.getValueAt(selected,1).toString());
-//                txtDirector.setText(df.getValueAt(selected,1).toString());
-//                txtGender.setText(df.getValueAt(selected,1).toString());
-//                txtYear.setText(df.getValueAt(selected,1).toString());
-//                txtScore.setText(df.getValueAt(selected,1).toString());
-//
-//            }
-//
-//        });
     }
 }
